@@ -18,6 +18,6 @@ df2.to_csv('data/genre.csv', index=False)
 df3 = df[df['type'] == 'Movie']
 #df3['duration'] = df3['duration'].str.split(' min').astype(int).tolist()
 df3["duration"] = pd.to_numeric(df3["duration"].str.replace(' min', ''))
-df3 = df3.groupby(['release_year'])['duration'].mean().reset_index(name="avg")
+df3 = df3.groupby(['release_year'])['duration'].mean().astype(int).reset_index(name="avg")
 print(df3)
 df3.to_csv('data/duration.csv', index=False)

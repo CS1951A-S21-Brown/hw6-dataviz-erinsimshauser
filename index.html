@@ -15,6 +15,10 @@
     <!--  We included a basic HTML structure for the 3 graphs here. Feel free to change this if you'd like  -->
     <div class="row">
         <div class="col-lg-6">
+            <div>
+                <button type="button" class="btn btn-info" onclick="setData(desc)">Top Genres</button>
+                <button type="button" class="btn btn-info" onclick="setData(asc)">Bottom Genres</button>
+            </div>
             <div id="graph1"></div>
             <div id="graph2"></div><br/>
         </div>
@@ -23,6 +27,13 @@
         </div>
     </div>
     <!--Feel free to add more JavaScript files as needed-->
-    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="main.js">
+        const NUM_EXAMPLES = 20;
+    </script>
+    <script type="text/javascript" src="bar.js">
+        const NUM_EXAMPLES = 20;
+    </script>
+    <script type="text/javascript" src="scatter.js">
+    </script>
 </body>
 </html>
