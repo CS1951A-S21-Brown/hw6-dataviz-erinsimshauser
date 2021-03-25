@@ -37,7 +37,7 @@ let y_axis_label = svg.append("g");
 
 // TODO: Add x-axis label
 svg.append("text")
-    .attr("transform", `translate(${(graph_1_width - margin.right - margin.left) /2}, ${graph_1_height-margin.bottom})`)       // HINT: Place this at the bottom middle edge of the graph
+    .attr("transform", `translate(${(graph_1_width - margin.right - margin.left) /2}, 260)`)       // HINT: Place this at the bottom middle edge of the graph
     .style("text-anchor", "middle")
     .text("Count");
 // Since this text will not update, we can declare it outside of the setData function
@@ -128,6 +128,7 @@ function setData(comp) {
             .attr("x", function(d) {return x(d.count) + 10})       // HINT: Add a small offset to the right edge of the bar, found by x(d.count)
             .attr("y", function(d) {return y(d.genre) + 10 })       // HINT: Add a small offset to the top edge of the bar, found by y(d.artist)
             .style("text-anchor", "start")
+            .style("font-size", "12px")
             .text(function(d) {return d.count});           // HINT: Get the count of the artist
 
         y_axis_text.text("Genre");
