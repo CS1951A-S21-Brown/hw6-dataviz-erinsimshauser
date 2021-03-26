@@ -16,10 +16,10 @@
     <div class="col">
         <div class="row" style="padding: 5%;">
             <div class="text-center">
-                <button type="button" class="btn btn-primary" onclick="setFile(0); setData()">All</button>
+                <button type="button" class="btn btn-dark" onclick="setFile(0); setData()">All</button>
                 
-                <button type="button" class="btn btn-primary" onclick="setFile(1); setData()">Movies</button>
-                <button type="button" class="btn btn-primary" onclick="setFile(2); setData()">TV Shows</button>
+                <button type="button" class="btn btn-dark" onclick="setFile(1); setData()">Movies</button>
+                <button type="button" class="btn btn-dark" onclick="setFile(2); setData()">TV Shows</button>
                 <button type="button" class="btn btn-secondary" onclick="setComp(desc); setData()">Top Genres</button>
                 <button type="button" class="btn btn-secondary" onclick="setComp(asc); setData()">Bottom Genres</button>
                 
@@ -36,13 +36,30 @@
         <div class="row" style="padding: 5% 10% 5% 10%;">
             <h3>Written Questions</h3>
             <p>
-    
+                I answered the first question with the barchart. In order to present the number of titles per genre I thought a bar graph would demonstrate well how different genres compare to each other directly. I provided filters to show all genres, movie genres, and TV show genres so that a user can control which they see. I also provided a filter to view the top genres by number of titles and bottom genres because it was not specified whether the boss wants to know top or bottom so this allows them control again over how to view information.
+
+            </p>
+            <br>
+            <p>I provided a scatter plot to visualize the average runtime over the course of the years. I also made it a connected scatter plot so that users can easily see how it moved over the years. I provided tooltips here so users can learn more about specific data points that stand out to them. This provides both a general overview of the trend as well as the ability for closer exploration. 
+            </p>
+            <br>
+            <p>Finally I used a flowchart to display actor connections. The data is filtered to only show actor pairs who have been in 5 or more movies together in order to make the visualization easier to understand. I used a few different methods here to help visualize the connections. First when you hover over a node or link, you can view the name of the actor or the number of movies between actors respectively. The size of the radius of nodes are proportional to the number of movies an actor is in. This is different from the links because I wanted to weight the nodes by the number of links and how many movies make up those links. Nodes are also differentiated by color which is also based on the number of links and movies in each link connected to an actor.
             </p>
             <h4>3 reasons why D3 was helpful and improved your visualization</h4>
-            <li>D3 is helpful for </li>
+            <li>Visual flexibility: D3 is helpful for creating visually appealing graphs and charts. There are many built in ways to add colors, labels, etc. and create very clean graphs. D3 allows for so much customization that you can make a graph look a very specific way which improved my visualization.
+            </li>
+            <li>Interaction: D3 is helpful for adding user interaction to visualizations. Tooltips are an easy way to add information to a graph so that a user can get a general idea of the graph and then get more information on a specific node or aspect. This is a nice way to provide information without crowding a graph with too many labels. D3 is javascript so it is really easy to use on websites which also makes it easier for user interaction since users can easily access a website.
+            </li>
+            <li>Data Integration: D3’s csv function also was very helpful because it provided easy integration with our data sources. It was nice to do the data processing in python and then export to a csv file rather than being forced to do the processing in javascript.
+            </li>
             <h4>3 reasons why D3 would not be the best tool for creating a visualization</h4>
             <li>hello</li>
             <b>Accessible Data Visualization</b>
+            <p>I used the WAVE analysis tool which is a tool I’ve used in other classes to assess the accessibility of websites before. I used this to make sure there weren’t any contrast issues with my dashboard. One thing the “Inclusive Design” article mentioned was the importance of displaying all information and not requiring a hover to display it since that might be accessible by screen readers. My dashboard does rely on hovers and use them to display labels for specific nodes which makes it less accessible. I think one solution offered by the “Why Accessibility is at the Heart of Data Visualization” was to add short summaries for screen readers in addition to the graphs. This can help people with assistive technologies to get a quick understanding of the charts that screen readers cannot access. Other options offered could be using alternative measures such as sound to communicate data.
+            </p>
+            <br>
+            <p>Deciding to use hover was an important step where I could have chosen to use labels instead which would have made it more accessible. One factor that kept me from this was something I mentioned above which is that I felt like it would make the  graph too crowded, especially the scatter plot. Another factor was that it was more complicated to display text along with the circle for the nodes.
+            </p>
         </div>
     </div>
     
