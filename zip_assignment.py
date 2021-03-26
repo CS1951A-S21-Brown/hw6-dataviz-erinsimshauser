@@ -5,12 +5,9 @@ is of this exact structure (with exact naming):
 | data
     | *
 | <all the other stuff that you included with no name requirements>
-
 And then it will zip
-
 This code is inspired by the submission zip file created by Professor
 James Tompkin (james_topkin@brown.edu) for CSCI 1430 - Brown University.
-
 Adapted by Nam Do (nam_do@brown.edu) - Spring 2021.
 """
 from __future__ import with_statement
