@@ -37,9 +37,18 @@ def actors():
     l = df4['cast'].str.split(', ').tolist()
     df = pd.DataFrame(df4["show_id"])
     df['cast'] = l
+    a = pd.DataFrame(df.explode('cast'))
+
     df = df[df['cast'].notna()]
     # df.drop(df['show_id'])
     # df.dropna()
+    #print(a)
+    a.columns =['id', "cast"]
+    a['count'] = 1
+
+    a = a.groupby(['cast'])['count'].sum().reset_index(name="count")
+    print(a)
+
     df['cast'] = df['cast'].apply(lambda x: list(combinations(x, 2)))
     df2 = pd.DataFrame(df.explode('cast'))
 
@@ -55,19 +64,18 @@ def actors():
     df2 = df2.drop(columns=['count'])
     df2.index = range(len(df2.index))
 
-    print(df2)
+    #print(df2)
 
     # print(df2)
     #df3 = pd.DataFrame(df['cast'].tolist(), index=df.index)
 
-    df2[['source', 'target']] = pd.DataFrame(
-        df2['cast'].tolist(), index=df2.index)
+    df2[['source', 'target']] = pd.DataFrame(df2['cast'].tolist(), index=df2.index)
     df2 = df2.drop(columns=['cast'])
     df2['count'] = c
     df2['count'] = df2['count'].apply(lambda x: str(x))
     df2.to_csv('data/actorpairs.csv', index=False)
 
-    print(df2)
+    #print(df2)
     #df3[['source', 'target']] = pd.DataFrame(df3.cast.tolist(), index=df3.index)
     #print(list(combinations(df['cast'], 2)))
     #df3.drop(columns=['cast'], inplace=True)

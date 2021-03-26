@@ -12,54 +12,66 @@
         .attr("class", "tooltip")
         .style("opacity", 0);
 
+    let title = svg.append("text")
+        .attr("transform", `translate(${(graph_1_width - margin.left - margin.right) / 2}, -10)`)       // HINT: Place this at the top middle edge of the graph
+        .style("text-anchor", "middle")
+        .style("font-size", 15)
+        .text('Top Actor Pairs based on Number of Movies made Together');
+
     d3.csv("data/actorpairs.csv").then(function (data) {
-        //array of nodes
         var graph = {
             'nodes': [],
             'links': []
         };
         data.forEach(function (d) {
+            var status = graph.nodes.some(n => n.name === d.source)
+            if (graph.nodes.some(n => n.name === d.source)) {
+                i = graph.nodes.findIndex(o => o.name === d.source);
+                orig_name = graph.nodes[i].name
+                new_count = parseInt(graph.nodes[i].count) + parseInt(d.count)
+
+                graph.nodes[i] = {name: orig_name, count: new_count, group: new_count/4}
+            }
+            if (graph.nodes.some(n => n.name === d.target)) {
+                i = graph.nodes.findIndex(o => o.name === d.target);
+                orig_name = graph.nodes[i].name
+                new_count = parseInt(graph.nodes[i].count) + parseInt(d.count)
+
+                graph.nodes[i] = {name: orig_name, count: new_count, group: new_count/4}
+             }
+            if (!graph.nodes.some(n => n.name === d.source)) {
+                c = parseInt(d.count)
+                graph.nodes.push({name: d.source, count: c, group: c/4})
+            }
             
-            //check if node is present if not add that in the array to get unique nodes.
-            if (graph.nodes.indexOf(d.source.trim()) < 0) {
-                //sorce node not there so add
-                graph.nodes.push(d.source.trim())
+            if (!graph.nodes.some(n => n.name === d.target)) {
+                c = parseInt(d.count)
+                graph.nodes.push({name: d.target, count: c, group: c/4})
             }
-            if (graph.nodes.indexOf(d.target.trim()) < 0) {
-                //target node not there so add
-                graph.nodes.push(d.target.trim())
-            }
-            //link to map the nodes with its index.
-            graph.links.push({ source: graph.nodes.indexOf(d.source.trim()), target: graph.nodes.indexOf(d.target.trim()), num: d.count, pair1: d.source, pair2: d.target })
+            graph.links.push({ source: d.source, target: d.target, num: d.count })
         });
-        graph.nodes = graph.nodes.map(function (n) {
-            return { name: n }
-        })
 
-        //console.log(graph)
 
-        let flow = d3.forceSimulation(graph.nodes)                 // Force algorithm is applied to data.nodes
-            .force("link", d3.forceLink()                               // This force provides links between nodes
-                // This provide  the id of a node
+
+        let flow = d3.forceSimulation(graph.nodes)
+            .force("link", d3.forceLink()      
+                .id(function(d) {return d.name})
                 .links(graph.links)
-                .distance(50).strength(1)                                 // and this the list of links
             )
-            .force("charge", d3.forceManyBody().strength(-500))         // This adds repulsion between nodes. Play with the -400 for the repulsion strength
-            .force("center", d3.forceCenter((graph_3_width / 4), graph_3_height / 2))     // This force attracts nodes to the center of the svg area
-            .force("x", d3.forceX(graph_3_width / 10).strength(1))
+            .force("charge", d3.forceManyBody().strength(-1000))
+            .force("center", d3.forceCenter((graph_3_width / 3), graph_3_height / 2))
+            .force("x", d3.forceX(graph_3_width / 2).strength(1))
             .force("y", d3.forceY(graph_3_height / 2).strength(1))
             .on("tick", ticked);
 
             let linkmouseover = function (d) {
                 let color_span = `<span style="color: #6667FF;">`;
                 let html = `${color_span}${d.num} movies between
-                            ${d.pair1} & ${d.pair2}</span>`;       // HINT: Display the song here
-    
-                // Show the tooltip and set the position relative to the event X and Y location
+                            ${d.source.name} & ${d.target.name}</span>`;
                 tooltip.html(html)
                     .style("left", `${(d3.event.pageX)}px`)
                     .style("top", `${(d3.event.pageY) - 30}px`)
-                    .style("box-shadow", `2px 2px 5px #669AFF`)    // OPTIONAL for students
+                    .style("box-shadow", `2px 2px 5px #669AFF`)
                     .transition()
                     .duration(200)
                     .style("background", 'white')
@@ -83,19 +95,17 @@
             .data(graph.links)
             .join("line")
             .attr("stroke-width", 3)
-            .on("mouseover", linkmouseover) // HINT: Pass in the mouseover and mouseout functions here
+            .on("mouseover", linkmouseover)
             .on("mouseout", linkmouseout);
 
 
         let mouseover = function (d) {
             let color_span = `<span style="color: #6667FF;">`;
-            let html = `${d.name}</span>`;       // HINT: Display the song here
-
-            // Show the tooltip and set the position relative to the event X and Y location
+            let html = `${d.name}</span>`;
             tooltip.html(html)
                 .style("left", `${(d3.event.pageX)}px`)
                 .style("top", `${(d3.event.pageY) - 30}px`)
-                .style("box-shadow", `2px 2px 5px #669AFF`)    // OPTIONAL for students
+                .style("box-shadow", `2px 2px 5px #669AFF`)
                 .transition()
                 .duration(200)
                 .style("background", 'white')
@@ -111,15 +121,20 @@
                 .style("opacity", 0);
         };
 
+        let colors = d3.scaleLinear()
+            .domain([0, d3.max(graph.nodes, function(d) { return d.count })/ 4])
+            .range(["#9f95ff", "#6667FF"]);
+        console.log(colors.domain())
+        console.log(colors.range())
+        
         let node = svg
             .selectAll("circle")
             .data(graph.nodes)
             .enter()
             .append("circle")
-            //.call(drag(simulation))
             .attr("class", "node")
-            .attr("r", 5)
-            .style("fill", "#6667FF")
+            .attr("r", function(d) {return Math.sqrt(d.count) * 1.5})
+            .attr("fill", function(d) {return colors(d.group) })
             .style("stroke", "black")
             .on("mouseover", mouseover) // HINT: Pass in the mouseover and mouseout functions here
             .on("mouseout", mouseout);
