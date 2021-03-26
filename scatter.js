@@ -109,7 +109,7 @@
             .data([data])
             .attr("class", "line")
             .attr("fill", "none")
-            .attr("stroke", "black")
+            .attr("stroke", "gray")
             .attr("stroke-width", 1.5)
             .attr("d", d3.line()
                 // .curve(d3.curveBasis) // Just add that to have a curve instead of segments

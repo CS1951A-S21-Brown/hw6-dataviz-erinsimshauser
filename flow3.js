@@ -88,13 +88,13 @@
             };
 
         let link = svg.append("g")
-            .attr("stroke", "#999")
-            .attr("stroke-opacity", 0.3)
+            .attr("stroke", "gray")
+            .attr("stroke-opacity", 0.5)
             .attr("class", "links")
             .selectAll("line")
             .data(graph.links)
             .join("line")
-            .attr("stroke-width", 3)
+            .attr("stroke-width", 2)
             .on("mouseover", linkmouseover)
             .on("mouseout", linkmouseout);
 
@@ -121,11 +121,10 @@
                 .style("opacity", 0);
         };
 
-        let colors = d3.scaleLinear()
-            .domain([0, d3.max(graph.nodes, function(d) { return d.count })/ 4])
-            .range(["#9f95ff", "#6667FF"]);
-        console.log(colors.domain())
-        console.log(colors.range())
+        let colors = d3.scaleQuantize()
+            .domain([0, d3.max(graph.nodes, function(d) { return d.group })])
+            .range(["#66FFFE", "#65CCFF", "#669AFF", "#6667FF"]);
+        
         
         let node = svg
             .selectAll("circle")
@@ -133,9 +132,9 @@
             .enter()
             .append("circle")
             .attr("class", "node")
-            .attr("r", function(d) {return Math.sqrt(d.count) * 1.5})
+            .attr("r", function(d) {return Math.sqrt(d.count) + d.count/15})
             .attr("fill", function(d) {return colors(d.group) })
-            .style("stroke", "black")
+            .style("stroke", "gray")
             .on("mouseover", mouseover) // HINT: Pass in the mouseover and mouseout functions here
             .on("mouseout", mouseout);
 
