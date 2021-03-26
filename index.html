@@ -13,19 +13,34 @@
         <h3>Assignment 6 &laquo; Data Visualization Dashboard &raquo;</h3>
     </div>
     <!--  We included a basic HTML structure for the 3 graphs here. Feel free to change this if you'd like  -->
-    <div class="row">
-        <div class="col-lg-6">
+    <div class="col">
+        <div class="row" style="padding: 5%;">
             <div class="text-center">
                 <button type="button" class="btn btn-info" onclick="setData(desc)">Top Genres</button>
                 <button type="button" class="btn btn-info" onclick="setData(asc)">Bottom Genres</button>
             </div>
             <div id="graph1"></div>
+            <!-- <div id="graph2"></div><br/> -->
+        </div>
+        <div class="row" style="padding: 5%;">
             <div id="graph2"></div><br/>
         </div>
-        <div class="col-lg-6">
+        <div class="row">
             <div id="graph3"></div>
         </div>
+        <div class="row" style="padding: 5% 10% 5% 10%;">
+            <h3>Written Questions</h3>
+            <p>
+    
+            </p>
+            <h4>3 reasons why D3 was helpful and improved your visualization</h4>
+            <li>D3 is helpful for </li>
+            <h4>3 reasons why D3 would not be the best tool for creating a visualization</h4>
+            <li></li>
+            <b>Accessible Data Visualization</b>
+        </div>
     </div>
+    
     <!--Feel free to add more JavaScript files as needed-->
     <script type="text/javascript" src="main.js">
         const NUM_EXAMPLES = 20;
@@ -34,6 +49,8 @@
         const NUM_EXAMPLES = 20;
     </script>
     <script type="text/javascript" src="scatter.js">
+    </script>
+    <script type="text/javascript" src="flow2.js">
     </script>
 </body>
 </html>
