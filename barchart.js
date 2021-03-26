@@ -9,6 +9,10 @@ const NUM_EXAMPLES = 20;
     defined in the HTML file, you can use the ${variable} notation.
  */
 // TODO: Set up SVG object with width, height and margin
+let filenames = ["data/genreall.csv", "data/genremovie.csv", "data/genretv.csv"];
+let currfile = "data/genreall.csv"
+let currcomp = desc
+
 let svg = d3.select("#graph1")
     .append("svg")
     .attr("width", graph_1_width)     // HINT: width
@@ -37,7 +41,7 @@ let y_axis_label = svg.append("g");
 
 // TODO: Add x-axis label
 svg.append("text")
-    .attr("transform", `translate(${(graph_1_width - margin.right - margin.left) /2}, 260)`)       // HINT: Place this at the bottom middle edge of the graph
+    .attr("transform", `translate(${(graph_1_width - margin.right - margin.left) /2}, 300)`)       // HINT: Place this at the bottom middle edge of the graph
     .style("text-anchor", "middle")
     .text("Count");
 // Since this text will not update, we can declare it outside of the setData function
@@ -59,16 +63,14 @@ let title = svg.append("text")
  */
 
 
-
-/**
- * Sets the data on the barplot using the provided index of valid data sources and an attribute
- * to use for comparison
- */
-function setData(comp) {
+function setData() {
+    console.log("hi")
+    
     // TODO: Load the artists CSV file into D3 by using the d3.csv() method. Index into the filenames array
-    d3.csv("data/genre.csv").then(function(data) {
+    d3.csv(currfile).then(function(data) {
+        
         // TODO: Clean and strip desired amount of data for barplot
-        data = cleanData(data, comp, NUM_EXAMPLES);
+        data = cleanData(data, currcomp, NUM_EXAMPLES);
 
         // TODO: Update the x axis domain with the max count of the provided data
         x.domain([0, d3.max(data, function(d) {return parseInt(d.count)})]);
@@ -162,4 +164,14 @@ function desc(a, b) {
     return b.count - a.count
 }
 
-setData(desc)
+setData()
+
+function setFile(i) {
+    currfile = filenames[i]
+}
+
+function setComp(i) {
+    currcomp = i
+}
+
+

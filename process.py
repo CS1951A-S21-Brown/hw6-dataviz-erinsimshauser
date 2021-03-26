@@ -6,6 +6,7 @@ from itertools import combinations
 def genres():
     df = pd.read_csv('data/netflix.csv')
 
+    #df2 = df[df['type'] == 'Movie']
     df2 = pd.DataFrame(df.listed_in.str.split(
         ', ').tolist(), index=df.show_id).stack()
     df2 = df2.reset_index([0, 'show_id'])
@@ -13,6 +14,18 @@ def genres():
     df2 = df2.groupby(['genre'])["show_id"].count().reset_index(name="count")
     # print(df2)
     df2.to_csv('data/genre.csv', index=False)
+
+    df1 = pd.read_csv('data/netflix.csv')
+
+    df3 = df1[df1['type'] == 'TV Show']
+
+    df3 = pd.DataFrame(df3.listed_in.str.split(
+        ', ').tolist(), index=df3.show_id).stack()
+    df3 = df3.reset_index([0, 'show_id'])
+    df3.columns = ['show_id', 'genre']
+    df3 = df3.groupby(['genre'])["show_id"].count().reset_index(name="count")
+    # print(df2)
+    df3.to_csv('data/genretv.csv', index=False)
 
 
 # Your boss wants to know the number of titles per genre on Netflix.
@@ -74,6 +87,7 @@ def actors():
     df2['count'] = c
     df2['count'] = df2['count'].apply(lambda x: str(x))
     df2.to_csv('data/actorpairs.csv', index=False)
+    
 
     #print(df2)
     #df3[['source', 'target']] = pd.DataFrame(df3.cast.tolist(), index=df3.index)
@@ -86,7 +100,7 @@ def actors():
 
 
 def main():
-    actors()
+    genres()
 
 
 if __name__ == "__main__":

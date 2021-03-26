@@ -74,11 +74,6 @@
         // Create a list of the groups in the nested data (representing songs) in the same order
         //let groups = nestedData.map(function(d) { return d.key });
 
-        // OPTIONAL: Adding color
-        // let color = d3.scaleOrdinal()
-        //     .domain(groups)
-        //     .range(d3.quantize(d3.interpolateHcl("#66a0e2", "#ff5c7a"), groups.length));
-
         // Mouseover function to display the tooltip on hover
         let mouseover = function (d) {
             let color_span = `<span style="color: #669AFF;">`;

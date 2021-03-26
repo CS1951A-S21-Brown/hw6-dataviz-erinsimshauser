@@ -16,8 +16,13 @@
     <div class="col">
         <div class="row" style="padding: 5%;">
             <div class="text-center">
-                <button type="button" class="btn btn-primary" onclick="setData(desc)">Top Genres</button>
-                <button type="button" class="btn btn-primary" onclick="setData(asc)">Bottom Genres</button>
+                <button type="button" class="btn btn-primary" onclick="setFile(0); setData()">All</button>
+                
+                <button type="button" class="btn btn-primary" onclick="setFile(1); setData()">Movies</button>
+                <button type="button" class="btn btn-primary" onclick="setFile(2); setData()">TV Shows</button>
+                <button type="button" class="btn btn-secondary" onclick="setComp(desc); setData()">Top Genres</button>
+                <button type="button" class="btn btn-secondary" onclick="setComp(asc); setData()">Bottom Genres</button>
+                
             </div>
             <div id="graph1"></div>
             <!-- <div id="graph2"></div><br/> -->
@@ -45,7 +50,7 @@
     <script type="text/javascript" src="main.js">
         const NUM_EXAMPLES = 20;
     </script>
-    <script type="text/javascript" src="bar.js">
+    <script type="text/javascript" src="barchart.js">
         const NUM_EXAMPLES = 20;
     </script>
     <script type="text/javascript" src="scatter.js">
